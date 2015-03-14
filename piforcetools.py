@@ -4,7 +4,8 @@
 import os, collections, signal, sys, subprocess, socket
 import triforcetools
 from Adafruit_CharLCDPlate import Adafruit_CharLCDPlate
-from time import sleep
+from time import *
+#time, sleep
 
 ips = ["192.168.1.2", "192.168.1.3", "192.168.1.4", "192.168.1.5"] # Add or remove as many endpoints as you want
 #rom_dir = "/boot/roms/"  # Set absolute path of rom files ending with trailing /
@@ -80,12 +81,30 @@ else:
     mode = "games"
     lcd.message(selection)
 lcd.backlight(lcd.YELLOW)
+lcdOFF=0
+start_time = time()
 while True:
-    lcd.backlight(lcd.YELLOW)
+    if lcdOFF==0:
+       lcd.backlight(lcd.YELLOW)
+       #lcd.display()
+    waited = time() - start_time
+    if ((waited > 15) and (lcdOFF==0)) :
+       #print "tries to lcdOff"
+       lcd.backlight(lcd.OFF)
+       #lcd.noDisplay()
+       lcdOFF=1
     # Handle SELECT
     if lcd.buttonPressed(lcd.SELECT):
+        start_time = time()
         if lcd.SELECT not in pressedButtons:
             pressedButtons.append(lcd.SELECT)
+            if lcdOFF==1:
+                lcdOFF=0
+                start_time = time()
+                lcd.backlight(lcd.YELLOW)
+                lcd.display()
+                continue
+
             lcd.backlight(lcd.BLUE)	
             if selection is "Change Target":
                 curr_ip += 1
@@ -148,6 +167,7 @@ while True:
 
     # Handle LEFT
     if lcd.buttonPressed(lcd.LEFT):
+        start_time = time()
         if lcd.LEFT not in pressedButtons and len(games) > 0:
             pressedButtons.append(lcd.LEFT)
             mode      = "games"
@@ -165,6 +185,7 @@ while True:
 
     # Handle RIGHT
     if lcd.buttonPressed(lcd.RIGHT):
+        start_time = time()
         if lcd.RIGHT not in pressedButtons:
             pressedButtons.append(lcd.RIGHT)
             mode      = "commands"
@@ -182,6 +203,7 @@ while True:
 
     # Handle UP
     if lcd.buttonPressed(lcd.UP):
+        start_time = time()
         if lcd.UP not in pressedButtons and previous != None:
             pressedButtons.append(lcd.UP)
             if mode is "games":
@@ -204,6 +226,7 @@ while True:
 
     # Handle DOWN
     if lcd.buttonPressed(lcd.DOWN):
+        start_time = time()
         if lcd.DOWN not in pressedButtons:
             pressedButtons.append(lcd.DOWN)            
             previous = selection
