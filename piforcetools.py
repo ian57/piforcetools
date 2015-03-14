@@ -81,7 +81,7 @@ else:
     lcd.message(selection)
 lcd.backlight(lcd.YELLOW)
 while True:
-
+    lcd.backlight(lcd.YELLOW)
     # Handle SELECT
     if lcd.buttonPressed(lcd.SELECT):
         if lcd.SELECT not in pressedButtons:
