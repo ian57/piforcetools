@@ -33,14 +33,15 @@ class Adafruit_CharLCDPlate(Adafruit_I2C):
 
     # LED colors
     OFF                     = 0x00
-    RED                     = 0x01
-    GREEN                   = 0x02
-    BLUE                    = 0x04
-    YELLOW                  = RED + GREEN
-    TEAL                    = GREEN + BLUE
-    VIOLET                  = RED + BLUE
-    WHITE                   = RED + GREEN + BLUE
-    ON                      = RED + GREEN + BLUE
+    ON			    = 0x01
+    RED                     = 0x02 + ON
+    GREEN                   = 0x04 + ON
+    BLUE                    = 0x08 + ON
+    YELLOW                  = (RED + GREEN) | ON
+    TEAL                    = (GREEN + BLUE) | ON
+    VIOLET                  = (RED + BLUE ) | ON
+    WHITE                   = (RED + GREEN + BLUE ) |ON
+    #ON                      = 0xff
 
     # LCD Commands
     LCD_CLEARDISPLAY        = 0x01
@@ -96,7 +97,7 @@ class Adafruit_CharLCDPlate(Adafruit_I2C):
         # sets up all the input pins, pull-ups, etc. for the Pi Plate.
         self.i2c.bus.write_i2c_block_data(
           self.i2c.address, 0, 
-          [ 0b00111111,   # IODIRA    R+G LEDs=outputs, buttons=inputs
+          [ 0b00011111,   # IODIRA    R+G LEDs=outputs, buttons=inputs ,modify by ArduinoKing
             self.ddrb ,   # IODIRB    LCD D7=input, Blue LED=output
             0b00111111,   # IPOLA     Invert polarity on button inputs
             0b00000000,   # IPOLB
@@ -108,7 +109,7 @@ class Adafruit_CharLCDPlate(Adafruit_I2C):
             0b00000000,   # INTCONB
             0b00000000,   # IOCON
             0b00000000,   # IOCON
-            0b00111111,   # GPPUA     Enable pull-ups on buttons
+            0b00011111,   # GPPUA     Enable pull-ups on buttons ,modify by ArduinoKing
             0b00000000,   # GPPUB
             0b00000000,   # INTFA
             0b00000000,   # INTFB
@@ -415,9 +416,10 @@ class Adafruit_CharLCDPlate(Adafruit_I2C):
 
     def backlight(self, color):
         c          = ~color
-        self.porta = (self.porta & 0b00111111) | ((c & 0b011) << 6)
-        self.portb = (self.portb & 0b11111110) | ((c & 0b100) >> 2)
-        # Has to be done as two writes because sequential operation is off.
+	self.porta = (self.porta & 0b00011111) | ((c & 0b0111) << 5)  #modify by ArduinoKing
+	self.portb = (self.portb & 0b11111110) | ((c & 0b1000) >> 3)  #modify by ArduinoKing
+        
+	# Has to be done as two writes because sequential operation is off.
         self.i2c.bus.write_byte_data(
           self.i2c.address, self.MCP23017_GPIOA, self.porta)
         self.i2c.bus.write_byte_data(
