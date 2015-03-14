@@ -10,7 +10,12 @@ Code:
 ~~~~~~
 
 I'm modifying it to work with de piface module from http://www.kubii.fr/site-entier/229-piface-control-display-afficheur-lcd-3272496000179.html which uses SPI bus, IR remote control ans more buttons.
-It uses also the pifacecad library. 
+It uses also the pifacecad library.  The program is name pifacetools.py
+
+## Banggood clone
+For this LCDPlate clone 16x2_LCD_with_Keypad_and_Backlit_SKU:297384  you need to use the patched version od the Adafruit code : http://www.raspberrypiwiki.com/index.php/16x2_LCD_with_Keypad_and_Backlit_SKU:297384 and the archive http://www.raspberrypiwiki.com/index.php/File:16x2LCD-Adafruit-Raspberry-Pi-Python-Code.zip
+
+When plugging the LCD plate on the Raspberry Pi you need to take care that the board does not touch or lay on the metallic cage of the usb connector or RJ 45 connector. If there is a contact, the i2c mcp module is not recognised anymore by the system and the module fails to work. I think a ground appears from the plate board to the pi board preventing the i2c to work.
 
 ## Usage
 
