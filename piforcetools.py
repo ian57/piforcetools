@@ -89,7 +89,7 @@ while True:
                     lcd.message("Netdimm is\nunreachable!")
                 sleep(2)
                 lcd.clear()
-                lcd.message(selection)			
+                lcd.message(selection)
             else:
                 lcd.clear()
                 lcd.message("Connecting...")
