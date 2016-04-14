@@ -10,7 +10,7 @@ Code:
 ~~~~~~
 
 I'm modifying it to work with de piface module from http://www.kubii.fr/site-entier/229-piface-control-display-afficheur-lcd-3272496000179.html which uses SPI bus, IR remote control ans more buttons.
-It uses the pifecad library. 
+It uses also the pifacecad library. 
 
 ## Usage
 
