@@ -5,9 +5,9 @@ Piforce Tools drives a Raspberry Pi with Adafruit LCD Plate and interfaces with 
 it is working with the adafruit LCD module 16x2 LCD Plate - http://learn.adafruit.com/adafruit-16x2-character-lcd-plus-keypad-for-raspberry-pi, and chinese clone from DX http://www.dx.com/fr/p/rgb-negative-16-x-2-lcd-keypad-kit-for-raspberry-pi-black-297384#.Vw-fkHWLTRZ but you need to modify the file Adafruit_CharLCDPlate.py, at line 99 like this 
 Code:
 
-'
+~~~~~~
 0b00011111, # IODIRA R+G LEDs=outputs, buttons=inputs
-'
+~~~~~~
 
 I'm modifying it to work with de piface module from http://www.kubii.fr/site-entier/229-piface-control-display-afficheur-lcd-3272496000179.html which uses SPI bus, IR remote control ans more buttons.
 It uses the pifecad library. 
