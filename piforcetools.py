@@ -113,9 +113,11 @@ while True:
                 lcd.message("\n"+ips[curr_ip])
             elif selection is "Shutdown":
                 lcd.clear()
-                lcd.message("System is halting... ")
+                lcd.message("System's halting\nPlease Wait... ")
                 lcd.backlight(lcd.RED)
+                sleep(2)
                 os.system("sudo halt")
+                sleep(5)
             elif selection is "Ping Netdimm":
                 lcd.clear()
                 lcd.message("Pinging\n"+ips[curr_ip])
