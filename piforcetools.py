@@ -10,7 +10,7 @@ from time import *
 ips = ["192.168.1.2", "192.168.1.3", "192.168.1.4", "192.168.1.5"] # Add or remove as many endpoints as you want
 #rom_dir = "/boot/roms/"  # Set absolute path of rom files ending with trailing /
 rom_dir = "/home/pi/roms/"  # Set absolute path of rom files ending with trailing /
-commands = ["Ping Netdimm", "Change Target"]
+commands = ["Ping Netdimm", "Change Target", "Shutdown"]
 
 # Define a signal handler to turn off LCD before shutting down
 def handler(signum = None, frame = None):
@@ -111,6 +111,11 @@ while True:
                 if curr_ip >= len(ips):
                     curr_ip = 0
                 lcd.message("\n"+ips[curr_ip])
+            elif selection is "Shutdown":
+                lcd.clear()
+                lcd.message("System is halting... ")
+                lcd.backlight(lcd.RED)
+                os.system("sudo halt")
             elif selection is "Ping Netdimm":
                 lcd.clear()
                 lcd.message("Pinging\n"+ips[curr_ip])
